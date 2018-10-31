@@ -24,6 +24,11 @@ while 1:
     print "Page %d \n\n" % page
     driver.get('https://www.bizjournals.com/profiles/company?q=&s=2&pl=%d' % page);
 
+
+    WebDriverWait(driver, 1000).until(
+            EC.presence_of_element_located((By.XPATH, "//*[contains(@class, 'primary')]//a[contains(@class,'item')]"))
+    )
+
     els = driver.find_elements(By.XPATH, "//*[contains(@class, 'primary')]//a[contains(@class,'item')]")
 
     for el in els:
@@ -36,6 +41,5 @@ while 1:
         bizcol.insert_one(toinsert)
 
     mongoclient.fsync()
-    break
 
 driver.close()
